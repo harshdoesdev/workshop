@@ -4,8 +4,6 @@ on:
     push:
         branches:
             - main
-        tags:
-            - "v*.*.*"
 
 jobs:
   create-zips:
@@ -22,9 +20,9 @@ jobs:
           zip -r "$folder_name.zip" "$dir"
         done
 
-    # - name: Get the current date
-    #   id: date
-    #   run: echo "::set-output name=date::$(date +'%Y%m%d%H%M%S')"
+    - name: Get the current date
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y%m%d%H%M%S')"
 
     - name: Create GitHub Release
       id: create_release
@@ -34,6 +32,6 @@ jobs:
           *.zip
         draft: false
         prerelease: false
-        # tag_name: ${{ steps.date.outputs.date }}
+        tag_name: ${{ steps.date.outputs.date }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
